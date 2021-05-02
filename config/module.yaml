@@ -1,0 +1,136 @@
+PVT-FEATURES:
+  EMBEDED_DIMS: [32,64,128,256]
+  NUM_BLOCKS: [3,3,3,3]
+  NUM_HEADS: [2,1,2,8]
+  MLP_RATIO: [4,4,4,4]
+  PROJ_DROP: [0.1,0.1,0.1,0.1]
+  SR_RATIOS: [4,2,1,1]
+
+MODULE:
+  IMAGE_SIZE: [256,256]
+  DROP_PATH_RATE: 0.1
+  STAGES:
+    NUM_FUSE: [0,1,2,2]
+    STAGE1:
+      LA_NUMS: 1
+      IN_CHANNELS:
+        - 32
+    STAGE2:
+      LA_NUMS: 2
+      IN_CHANNELS:
+        - 32
+        - 64
+    STAGE3:
+      LA_NUMS: 3
+      IN_CHANNELS:
+        - 32
+        - 64
+        - 128
+    STAGE4:
+      LA_NUMS: 4
+      # 当前阶段各层所输入的通道数
+      IN_CHANNELS:
+        - 32
+        - 64
+        - 128
+        - 256
+
+  LAYERS:
+    NUM_FUSES: 4
+    LAYER1:
+      NUM_BIG_BLOCKS: 3
+      NUM_BLOCKS:
+        - 3
+        - 3
+        - 3
+        - 3
+      SR_RATIOS: 8
+      IMG_SIZE: 128
+      MLP_RATIO: 4
+      NUM_HEADS: 2
+      EMBEDED_DIM: 32
+      QKV_BIAS: True
+      QK_SCALE: 1
+      ATTN_DROP: 0.1
+      PROJ_DROP: 0.
+      SR_RATIO: 6
+    LAYER2:
+      NUM_BIG_BLOCKS: 3
+      NUM_BLOCKS:
+        - 3
+        - 3
+        - 3
+      IMG_SIZE: 64
+      SR_RATIOS: 4
+      MLP_RATIO: 4
+      NUM_HEADS: 1
+      EMBEDED_DIM: 64
+      QKV_BIAS: True
+      QK_SCALE: 1
+      ATTN_DROP: 0.
+      PROJ_DROP: 0.
+      SR_RATIO: 4
+    LAYER3:
+      NUM_BIG_BLOCKS: 3
+      NUM_BLOCKS:
+        - 3
+        - 3
+      IMG_SIZE: 32
+      SR_RATIOS: 2
+      MLP_RATIO: 4
+      NUM_HEADS: 2
+      EMBEDED_DIM: 128
+      QKV_BIAS: True
+      QK_SCALE: 1
+      ATTN_DROP: 0.
+      PROJ_DROP: 0.
+      SR_RATIO: 2
+    LAYER4:
+      NUM_BIG_BLOCKS: 3
+      NUM_BLOCKS:
+        - 3
+      IMG_SIZE: 16
+      SR_RATIOS: 1
+      MLP_RATIO: 4
+      NUM_HEADS: 4
+      EMBEDED_DIM: 256
+      QKV_BIAS: True
+      QK_SCALE: 1
+      ATTN_DROP: 0.
+      PROJ_DROP: 0.
+      SR_RATIO: 1
+
+batch_size: 1
+num_thread: 0
+iter_size: 5
+show_everyone: 50
+mode: "test"
+load: None
+lr: 0.0001
+wd: 0.0005
+cuda: True
+save_folder: './checkpoint'
+test_fold: './test_result/CSSD/'
+temp_result: './train_temp_result/'
+validation_root: 'D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/vals'
+validation_list: 'D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/vals/validation.lst'
+epoch: 3000
+epoch_save: 50
+load_before: './train_before/epoch_HRTransNet_1850.pth'
+train_root: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/DUTS/DUTS-TR/"
+train_list: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/DUTS/DUTS-TR/train_pair.lst"
+train_root_t: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/CSSD/"
+train_list_t: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/CSSD/train.lst"
+util_image_R: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/ECSSD/images/0464.jpg"
+util_label_R: "D:/tanyacheng/Experiments/SOD/datasets/RGB-SOD/ECSSD/masks/0464.png"
+util_image_D: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/DUT-RGBD/RGB/0585.jpg"
+util_label_D: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/DUT-RGBD/GT/0585.png"
+util_image: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/LFSD/RGB/2.jpg"
+util_label: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/LFSD/GT/2.png"
+util_image_Z: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/LFSD/RGB/2.jpg"
+util_label_Z: "D:/tanyacheng/Experiments/SOD/datasets/RGBD_for_test/RGBD_for_test/LFSD/GT/2.png"
+save_log_path: "./running_log/"
+model: './checkpoint/run-3/epoch_HRTransNet_720.pth'
+sal_mode: 'CSSD'
+
+
